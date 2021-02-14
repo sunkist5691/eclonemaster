@@ -1,4 +1,5 @@
 const Category = require("../models/category");
+const Sub = require("../models/sub");
 const slugify = require("slugify");
 
 exports.create = async (req, res) => {
@@ -57,4 +58,12 @@ exports.remove = async (req, res) => {
   } catch (err) {
     res.status(400).send("Failed to delete category");
   }
+};
+
+exports.getSubs = (req, res) => {
+  // Original way of fetching subs category without using async/await
+  Sub.find({ parent: req.params._id }).exec((err, subs) => {
+    if (err) console.log("ERROR FROM SUBS: ", err);
+    res.json(subs);
+  });
 };
