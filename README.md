@@ -1,2 +1,2 @@
 # eclonemaster
-# This project is cloning project from 3rd party.
+# This is ecommerce cloning project
