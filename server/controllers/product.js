@@ -19,10 +19,15 @@ exports.create = async (req, res) => {
   }
 };
 
-exports.read = async (req, res) => {
+exports.listAll = async (req, res) => {
   // fetch all the products that is listed
   // populate method 는 category 의 information 또한 같이 보내준다.
   // let products = await Product.find({}).populate('category');
-  let products = await Product.find({});
+  let products = await Product.find({})
+    .limit(parseInt(req.params.count)) // 모든 파일이 아니라 count 갯수에 맞게 데이터를 가져온다
+    .populate("category")
+    .populate("subs") // product model 에 ref: 된 파일들은 populate 을 해야 거기에 연결된 데이터까지 다 보내준다
+    .sort([["createAt", "desc"]]) // sort in createAt with descending order
+    .exec();
   res.json(products);
 };
