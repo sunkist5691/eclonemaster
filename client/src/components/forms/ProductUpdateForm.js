@@ -64,6 +64,9 @@ const ProductUpdateForm = ({
       <div className='form-group'>
         <label>Shipping</label>
         <select
+          // reason we are doing ternary operator at `value`,
+          // because it default to `Yes` which we want to prevent that
+          value={shipping === "Yes" ? "Yes" : "No"}
           name='shipping'
           className='form-control'
           onChange={handleChange}
@@ -86,8 +89,13 @@ const ProductUpdateForm = ({
 
       <div className='form-group'>
         <label>Color</label>
-        <select name='color' className='form-control' onChange={handleChange}>
-          <option>Please select</option>
+        {/* value=colors will bring or prepopulate the default value */}
+        <select
+          value={colors}
+          name='color'
+          className='form-control'
+          onChange={handleChange}
+        >
           {colors.map((c) => (
             <option key={c} value={c}>
               {c}
@@ -98,8 +106,12 @@ const ProductUpdateForm = ({
 
       <div className='form-group'>
         <label>Brand</label>
-        <select name='brand' className='form-control' onChange={handleChange}>
-          <option>Please select</option>
+        <select
+          value={brand}
+          name='brand'
+          className='form-control'
+          onChange={handleChange}
+        >
           {brands.map((b) => (
             <option key={b} value={b}>
               {b}
