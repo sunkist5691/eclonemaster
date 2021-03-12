@@ -12,7 +12,6 @@ const initialState = {
   title: "",
   description: "",
   price: "",
-  categories: [],
   category: "",
   subs: [],
   shipping: "",
@@ -27,6 +26,8 @@ const initialState = {
 const ProductUpdate = ({ match }) => {
   // state
   const [values, setValues] = useState(initialState);
+  const [categories, setCategories] = useState([]);
+  const [subOptions, setSubOptions] = useState([]);
   const { user } = useSelector((state) => ({ ...state }));
 
   // router
@@ -34,6 +35,7 @@ const ProductUpdate = ({ match }) => {
 
   useEffect(() => {
     loadProduct();
+    loadCategories();
   }, []);
 
   const loadProduct = () => {
@@ -42,11 +44,28 @@ const ProductUpdate = ({ match }) => {
     });
   };
 
+  const loadCategories = () =>
+    getCategories().then((c) => setCategories(c.data));
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
+  };
+  const handleCategoryChange = (e) => {
+    e.preventDefault(); // why do we need default at here?
+    console.log("CLICKED CATEGORY: ", e.target.value);
+    setValues({
+      ...values,
+      subs: [],
+      category: e.target.value,
+    });
+
+    // whenever you change category, the new sub-categories will fetched
+    getCategorySubs(e.target.value).then((res) => {
+      setSubOptions(res.data);
+    });
   };
   return (
     <div className='container-fluid'>
@@ -59,8 +78,11 @@ const ProductUpdate = ({ match }) => {
           <ProductUpdateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
+            handleCategoryChange={handleCategoryChange}
             setValues={setValues}
             values={values}
+            categories={categories}
+            subOptions={subOptions}
           />
           <hr />
         </div>

@@ -4,9 +4,12 @@ import { Select } from "antd";
 const { Option } = Select;
 
 const ProductUpdateForm = ({
+  handleCategoryChange,
   handleChange,
   handleSubmit,
   setValues,
+  subOptions,
+  categories,
   values,
 }) => {
   // destructure
@@ -14,7 +17,6 @@ const ProductUpdateForm = ({
     title,
     description,
     price,
-    categories,
     category,
     subs,
     shipping,
@@ -117,6 +119,24 @@ const ProductUpdateForm = ({
               {b}
             </option>
           ))}
+        </select>
+      </div>
+
+      <div className='form-group'>
+        <label>Category</label>
+        {/* onChange 는 option 에서 내가 고른 value 값을 setCategory 에 지정하여 category 값을 업데이트한다 */}
+        <select
+          name='category'
+          className='form-control'
+          onChange={handleCategoryChange}
+        >
+          <option>{category ? category.name : "Please select"}</option>
+          {categories.length > 0 &&
+            categories.map((c) => (
+              <option key={c._id} value={c._id}>
+                {c.name}
+              </option>
+            ))}
         </select>
       </div>
       <br />
