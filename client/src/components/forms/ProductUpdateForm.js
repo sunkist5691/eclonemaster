@@ -9,6 +9,8 @@ const ProductUpdateForm = ({
   handleSubmit,
   setValues,
   subOptions,
+  arrayOfSubs,
+  setArrayOfSubs,
   categories,
   values,
 }) => {
@@ -138,6 +140,25 @@ const ProductUpdateForm = ({
               </option>
             ))}
         </select>
+      </div>
+
+      <div>
+        <label>Sub Categories</label>
+        <Select
+          mode='multiple' // mode 는 어떤 유형의 select 를 사용하는지 설정해준다
+          style={{ width: "100%" }}
+          placeholder='Please select'
+          value={arrayOfSubs} // whenever we select one of the options, it automatically added into subs as 'value' from each option
+          onChange={(value) => setArrayOfSubs(value)} // Ant Design use 'value' instead 'e', whenever we picked option, that value from option would automatically added (ONLY mode='multiple' add automatically to value) into subs
+          // so if mode == multiple, then the `value` will automatically create array and add whenever we click the subs into 'value'
+        >
+          {subOptions.length &&
+            subOptions.map((s) => (
+              <Option key={s._id} value={s._id}>
+                {s.name}
+              </Option>
+            ))}
+        </Select>
       </div>
       <br />
       <button className='btn btn-outline-info'>Save</button>
