@@ -30,10 +30,11 @@ const ProductUpdate = ({ match }) => {
   const [subOptions, setSubOptions] = useState([]);
   const { user } = useSelector((state) => ({ ...state }));
   const [arrayOfSubs, setArrayOfSubs] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   // router
   const { slug } = match.params;
-
+  console.log(arrayOfSubs);
   useEffect(() => {
     loadProduct();
     loadCategories();
@@ -74,13 +75,21 @@ const ProductUpdate = ({ match }) => {
     setValues({
       ...values,
       subs: [],
-      category: e.target.value,
     });
-
+    setSelectedCategory(e.target.value);
     // whenever you change category, the new sub-categories will fetched
     getCategorySubs(e.target.value).then((res) => {
       setSubOptions(res.data);
     });
+    console.log("EXISTING CATEGORY values.category: ", values.category);
+
+    // if user clicks back to the original category
+    // show its sub categories in default
+    if (values.category._id === e.target.value) {
+      loadProduct();
+    } else {
+      setArrayOfSubs([]);
+    }
   };
   return (
     <div className='container-fluid'>
@@ -100,6 +109,7 @@ const ProductUpdate = ({ match }) => {
             subOptions={subOptions}
             arrayOfSubs={arrayOfSubs}
             setArrayOfSubs={setArrayOfSubs}
+            selectedCategory={selectedCategory}
           />
           <hr />
         </div>
