@@ -31,6 +31,7 @@ const ProductUpdate = ({ match }) => {
   const { user } = useSelector((state) => ({ ...state }));
   const [arrayOfSubs, setArrayOfSubs] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // router
   const { slug } = match.params;
@@ -98,7 +99,19 @@ const ProductUpdate = ({ match }) => {
           <AdminNav />
         </div>
         <div className='col-md-10'>
-          <h4>Product update</h4>
+          {loading ? (
+            <LoadingOutlined className='text-danger h1' />
+          ) : (
+            <h4>Product update</h4>
+          )}
+          <div className='p-3'>
+            <FileUpload
+              values={values}
+              setValues={setValues}
+              setLoading={setLoading}
+            />
+          </div>
+
           <ProductUpdateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
