@@ -102,8 +102,8 @@ const FileUpload = ({ values, setValues, setLoading }) => {
       <div className='row'>
         {/* `label` wraps `input` and `input` use `hidden` property to hide a `input` on website,
        instead the functionality still works, it just not showing up on browser */}
-        <label className='btn btn-primary'>
-          choose File
+        <label className='btn btn-primary btn-raised mt-3'>
+          Choose File
           {/* `multiple` let you upload multiple images, 
          `accept='images/*'` let you accept to upload any form of images (jpeg, png, etc.) 
          if the file name starting with 'images/' */}
